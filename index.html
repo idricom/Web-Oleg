@@ -1,22 +1,24 @@
-```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Веб-Олег</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: #000;
-            line-height: 1.5;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            background-size: 200% 200%;
+            animation: gradient 15s ease infinite;
+            color: #fff;
+            line-height: 1.6;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -24,85 +26,96 @@
             overflow-x: hidden;
         }
 
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         header {
             text-align: center;
-            padding: 40px 20px;
+            padding: 60px 20px;
             width: 100%;
         }
 
         h1 {
-            font-size: 2.5em;
+            font-size: 3em;
             font-weight: 700;
             letter-spacing: -0.02em;
-            overflow: hidden; /* Для typewriter эффекта */
-            white-space: nowrap; /* Чтобы текст не переносился */
-            border-right: 0.15em solid #000; /* Курсор */
-            animation: blink-caret 0.75s step-end infinite; /* Мигание курсора */
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 0.15em solid #fff;
+            animation: blink-caret 0.75s step-end infinite;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.5s;
         }
 
-        .typewriter {
-            overflow: hidden;
-            white-space: nowrap;
-            border-right: 0.15em solid #000;
-            animation: blink-caret 0.75s step-end infinite;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         section {
-            max-width: 800px;
-            margin: 20px;
-            padding: 20px;
+            max-width: 900px;
+            margin: 30px 20px;
+            padding: 30px;
             text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s ease forwards;
+            animation-delay: calc(0.2s * var(--section-index));
         }
 
         h2 {
-            font-size: 1.5em;
+            font-size: 1.8em;
             font-weight: 600;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             letter-spacing: -0.01em;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 0.15em solid #fff;
+            animation: blink-caret 0.75s step-end infinite;
         }
 
         p {
-            font-size: 1em;
+            font-size: 1.1em;
             font-weight: 300;
-            color: #333;
-            max-width: 600px;
+            color: #e5e7eb;
+            max-width: 700px;
             margin: 0 auto;
         }
 
         .services {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            padding: 15px 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
         }
 
         .service-item {
-            padding: 15px;
-            border-radius: 12px;
-            flex: 1;
-            min-width: 120px;
-            background: rgba(255, 255, 255, 0.6);
+            padding: 20px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .service-item:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
         .service-item h3 {
-            font-size: 1.1em;
+            font-size: 1.2em;
             font-weight: 500;
         }
 
         .stages {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 15px;
-            justify-content: center;
             padding: 0;
             list-style: none;
         }
@@ -110,42 +123,41 @@
         .stages li {
             font-size: 1em;
             font-weight: 300;
-            padding: 12px 16px;
+            padding: 15px;
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            flex: 1;
-            min-width: 120px;
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .stages li:hover {
             transform: translateY(-5px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
 
         .brief {
-            margin: 30px 0;
+            margin: 40px 0;
         }
 
         .brief button {
-            font-size: 1em;
+            font-size: 1.1em;
             font-weight: 500;
             color: #fff;
             background: #000;
-            padding: 12px 24px;
+            padding: 14px 28px;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: background 0.3s ease, transform 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .brief button:hover {
-            background: #1a1a1a;
+            background: #1f2937;
             transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
 
         .modal {
@@ -155,124 +167,143 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
         }
 
         .modal-content {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
-            padding: 20px;
+            padding: 30px;
             border-radius: 16px;
-            max-width: 450px;
+            max-width: 500px;
             width: 90%;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .modal-content h2 {
-            font-size: 1.3em;
-            margin-bottom: 15px;
+            font-size: 1.5em;
+            color: #111827;
+            margin-bottom: 20px;
+            border-right: none;
+            animation: none;
         }
 
         .modal-content label {
             font-size: 0.9em;
-            font-weight: 300;
+            font-weight: 400;
             display: block;
-            margin: 10px 0 5px;
+            margin: 15px 0 5px;
+            color: #374151;
         }
 
         .modal-content input,
         .modal-content textarea {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             font-size: 0.9em;
-            background: rgba(255, 255, 255, 0.5);
-            transition: border 0.3s ease;
+            background: rgba(255, 255, 255, 0.7);
+            transition: border 0.3s ease, box-shadow 0.3s ease;
         }
 
         .modal-content input:focus,
         .modal-content textarea:focus {
-            border: 1px solid #000;
+            border: 1px solid #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            outline: none;
         }
 
         .modal-content button {
-            margin-top: 15px;
-            padding: 10px;
-            background: #000;
+            margin-top: 20px;
+            padding: 12px;
+            background: #3b82f6;
             color: #fff;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             width: 100%;
-            transition: background 0.3s ease;
+            font-size: 1em;
+            font-weight: 500;
+            transition: background 0.3s ease, transform 0.3s ease;
         }
 
         .modal-content button:hover {
-            background: #1a1a1a;
+            background: #2563eb;
+            transform: scale(1.02);
         }
 
         .close {
-            float: right;
-            font-size: 1.2em;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5em;
             cursor: pointer;
-            color: #666;
+            color: #6b7280;
             transition: color 0.3s ease;
         }
 
         .close:hover {
-            color: #000;
+            color: #111827;
         }
 
         footer {
             text-align: center;
-            padding: 20px;
-            font-size: 0.8em;
-            color: #555;
+            padding: 30px;
+            font-size: 0.9em;
             font-weight: 300;
+            color: #d1d5db;
             width: 100%;
             margin-top: auto;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 1s;
         }
 
-        /* Анимация для курсора */
         @keyframes blink-caret {
             from, to { border-color: transparent; }
-            50% { border-color: #000; }
+            50% { border-color: #fff; }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2em; }
+            h2 { font-size: 1.5em; }
+            p { font-size: 1em; }
+            .services, .stages { grid-template-columns: 1fr; }
+            .modal-content { padding: 20px; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1 class="typewriter"></h1>
+    <header style="--section-index: 0;">
+        <h1 class="typewriter">Веб-Олег</h1>
     </header>
 
-    <section id="description">
-        <h2 class="typewriter"></h2>
-        <p class="typewriter"></p>
+    <section id="description" style="--section-index: 1;">
+        <h2 class="typewriter">О нас</h2>
+        <p class="typewriter">Создаем современные сайты, лендинги, Telegram-боты и решения с ИИ.</p>
     </section>
 
-    <section id="services">
+    <section id="services" style="--section-index: 2;">
         <h2>Услуги</h2>
         <div class="services">
-            <div class="service-item">
-                <h3>Сайты</h3>
-            </div>
-            <div class="service-item">
-                <h3>Лендинги</h3>
-            </div>
-            <div class="service-item">
-                <h3>Боты</h3>
-            </div>
-            <div class="service-item">
-                <h3>ИИ</h3>
-            </div>
+            <div class="service-item"><h3>Сайты</h3></div>
+            <div class="service-item"><h3>Лендинги</h3></div>
+            <div class="service-item"><h3>Боты</h3></div>
+            <div class="service-item"><h3>ИИ</h3></div>
         </div>
     </section>
 
-    <section id="stages">
+    <section id="stages" style="--section-index: 3;">
         <h2>Этапы</h2>
         <ul class="stages">
             <li>Анализ</li>
@@ -283,8 +314,8 @@
         </ul>
     </section>
 
-    <section class="brief">
-        <button onclick="openModal()">Бриф</button>
+    <section class="brief" style="--section-index: 4;">
+        <button onclick="openModal()">Заполнить бриф</button>
     </section>
 
     <div id="briefModal" class="modal">
@@ -295,9 +326,9 @@
                 <label>Имя</label>
                 <input type="text" placeholder="Ваше имя" required>
                 <label>Email</label>
-                <input type="email" placeholder="web-oleg@gmail.com" required>
-                <label>Проект</label>
-                <textarea rows="3" placeholder="Опишите проект" required></textarea>
+                <input type="email" placeholder="example@gmail.com" required>
+                <label>О проекте</label>
+                <textarea rows="4" placeholder="Расскажите о вашем проекте" required></textarea>
                 <button type="submit">Отправить</button>
             </form>
         </div>
@@ -308,32 +339,32 @@
     </footer>
 
     <script>
-        // Typewriter эффект
-        function typeWriter(element, text, speed = 50) {
+        function typeWriter(element, text, speed = 50, callback) {
             let i = 0;
-            element.style.width = '0'; // Начинаем с нулевой ширины
+            element.style.width = '0';
             const interval = setInterval(() => {
                 if (i < text.length) {
                     element.innerHTML += text.charAt(i);
                     i++;
-                    element.style.width = `${element.innerHTML.length}ch`; // Расширяем ширину
+                    element.style.width = `${element.innerHTML.length}ch`;
                 } else {
                     clearInterval(interval);
-                    element.style.borderRight = 'none'; // Убираем курсор после завершения
+                    element.style.borderRight = 'none';
+                    if (callback) callback();
                 }
             }, speed);
         }
 
-        // Применяем эффект к элементам
         document.addEventListener('DOMContentLoaded', () => {
             const h1 = document.querySelector('h1');
-            typeWriter(h1, 'Веб-Олег', 100);
-
             const aboutH2 = document.querySelector('#description h2');
-            typeWriter(aboutH2, 'О нас', 100);
-
             const aboutP = document.querySelector('#description p');
-            typeWriter(aboutP, 'Разработка сайтов, лендингов, Telegram-ботов и интеграция ИИ.', 50);
+
+            typeWriter(h1, 'Веб-Олег', 100, () => {
+                typeWriter(aboutH2, 'О нас', 100, () => {
+                    typeWriter(aboutP, 'Создаем современные сайты, лендинги, Telegram-боты и решения с ИИ.', 50);
+                });
+            });
         });
 
         function openModal() {
@@ -353,4 +384,3 @@
     </script>
 </body>
 </html>
-```

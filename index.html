@@ -68,6 +68,15 @@
             font-weight: 600;
             margin-bottom: 20px;
             letter-spacing: -0.01em;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 0.15em solid #1f1f1f;
+            animation: blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #1f1f1f; }
         }
 
         p {
@@ -79,10 +88,11 @@
         }
 
         .services {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            display: flex;
+            flex-wrap: nowrap;
             gap: 15px;
             padding: 20px 0;
+            justify-content: center;
         }
 
         .service-item {
@@ -91,6 +101,9 @@
             background: rgba(255, 255, 255, 0.8);
             border: 1px solid rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            min-width: 120px;
+            overflow: hidden;
+            white-space: nowrap;
         }
 
         .service-item:hover {
@@ -101,14 +114,16 @@
         .service-item h3 {
             font-size: 1.1em;
             font-weight: 500;
+            display: inline-block;
         }
 
         .stages {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            display: flex;
+            flex-wrap: nowrap;
             gap: 12px;
             padding: 0;
             list-style: none;
+            justify-content: center;
         }
 
         .stages li {
@@ -120,6 +135,9 @@
             border: 1px solid rgba(0, 0, 0, 0.05);
             text-align: center;
             transition: transform 0.3s ease;
+            min-width: 100px;
+            overflow: hidden;
+            white-space: nowrap;
         }
 
         .stages li:hover {
@@ -178,6 +196,8 @@
             font-size: 1.4em;
             color: #1f1f1f;
             margin-bottom: 20px;
+            border-right: none;
+            animation: none;
         }
 
         .modal-content label {
@@ -253,7 +273,14 @@
             h1 { font-size: 2em; }
             h2 { font-size: 1.4em; }
             p { font-size: 0.95em; }
-            .services, .stages { grid-template-columns: 1fr; }
+            .services, .stages { 
+                flex-direction: column; 
+                align-items: center; 
+            }
+            .service-item, .stages li { 
+                width: 100%; 
+                max-width: 200px; 
+            }
             header { padding: 40px 20px; }
             .modal-content { padding: 20px; }
         }
@@ -270,23 +297,23 @@
     </section>
 
     <section id="services" style="--section-index: 2;">
-        <h2>Услуги</h2>
+        <h2 class="typewriter">Услуги</h2>
         <div class="services">
-            <div class="service-item"><h3>Сайты</h3></div>
-            <div class="service-item"><h3>Лендинги</h3></div>
-            <div class="service-item"><h3>Боты</h3></div>
-            <div class="service-item"><h3>ИИ</h3></div>
+            <div class="service-item"><h3 class="typewriter">Сайты</h3></div>
+            <div class="service-item"><h3 class="typewriter">Лендинги</h3></div>
+            <div class="service-item"><h3 class="typewriter">Боты</h3></div>
+            <div class="service-item"><h3 class="typewriter">ИИ</h3></div>
         </div>
     </section>
 
     <section id="stages" style="--section-index: 3;">
-        <h2>Этапы</h2>
+        <h2 class="typewriter">Этапы</h2>
         <ul class="stages">
-            <li>Анализ</li>
-            <li>Дизайн</li>
-            <li>Разработка</li>
-            <li>Тестирование</li>
-            <li>Поддержка</li>
+            <li class="typewriter">Анализ</li>
+            <li class="typewriter">Дизайн</li>
+            <li class="typewriter">Разработка</li>
+            <li class="typewriter">Тестирование</li>
+            <li class="typewriter">Поддержка</li>
         </ul>
     </section>
 
@@ -318,12 +345,15 @@
         function typeWriter(element, text, speed = 50, callback) {
             let i = 0;
             element.innerHTML = '';
+            element.style.width = '0';
             const interval = setInterval(() => {
                 if (i < text.length) {
                     element.innerHTML += text.charAt(i);
                     i++;
+                    element.style.width = `${element.innerHTML.length}ch`;
                 } else {
                     clearInterval(interval);
+                    element.style.borderRight = 'none';
                     if (callback) callback();
                 }
             }, speed);
@@ -333,10 +363,40 @@
             const h1 = document.querySelector('h1');
             const aboutH2 = document.querySelector('#description h2');
             const aboutP = document.querySelector('#description p');
+            const servicesH2 = document.querySelector('#services h2');
+            const servicesItems = document.querySelectorAll('#services .service-item h3');
+            const stagesH2 = document.querySelector('#stages h2');
+            const stagesItems = document.querySelectorAll('#stages li');
 
             typeWriter(h1, 'Веб-Олег', 80, () => {
                 typeWriter(aboutH2, 'О нас', 80, () => {
-                    typeWriter(aboutP, 'Создаём сайты, лендинги, боты и решения с ИИ, которые вдохновляют.', 40);
+                    typeWriter(aboutP, 'Создаём сайты, лендинги, боты и решения с ИИ, которые вдохновляют.', 40, () => {
+                        typeWriter(servicesH2, 'Услуги', 80, () => {
+                            let index = 0;
+                            function typeNextService() {
+                                if (index < servicesItems.length) {
+                                    typeWriter(servicesItems[index], servicesItems[index].textContent, 80, () => {
+                                        index++;
+                                        typeNextService();
+                                    });
+                                } else {
+                                    typeWriter(stagesH2, 'Этапы', 80, () => {
+                                        let stageIndex = 0;
+                                        function typeNextStage() {
+                                            if (stageIndex < stagesItems.length) {
+                                                typeWriter(stagesItems[stageIndex], stagesItems[stageIndex].textContent, 80, () => {
+                                                    stageIndex++;
+                                                    typeNextStage();
+                                                });
+                                            }
+                                        }
+                                        typeNextStage();
+                                    });
+                                }
+                            }
+                            typeNextService();
+                        });
+                    });
                 });
             });
         });

@@ -1,0 +1,314 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Веб-Олег</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background: #fff;
+            color: #000;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 2em;
+            font-weight: 700;
+        }
+
+        section {
+            max-width: 600px;
+            margin: 20px;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 0.9em;
+            font-weight: 300;
+            color: #333;
+        }
+
+        .services {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            padding: 10px 0;
+        }
+
+        .service-item {
+            padding: 10px;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 100px;
+            transition: transform 0.3s ease;
+        }
+
+        .service-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-item h3 {
+            font-size: 1em;
+            font-weight: 500;
+        }
+
+        .stages {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            padding: 0;
+            list-style: none;
+        }
+
+        .stages li {
+            font-size: 0.9em;
+            font-weight: 300;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.02);
+            flex: 1;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .brief {
+            margin: 20px 0;
+        }
+
+        .brief button {
+            font-size: 0.9em;
+            font-weight: 500;
+            color: #fff;
+            background: #000;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .brief button:hover {
+            background: #333;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .modal-content h2 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .modal-content label {
+            font-size: 0.85em;
+            font-weight: 300;
+            display: block;
+            margin: 8px 0 4px;
+        }
+
+        .modal-content input,
+        .modal-content textarea {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.85em;
+        }
+
+        .modal-content button {
+            margin-top: 10px;
+            padding: 8px;
+            background: #000;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .modal-content button:hover {
+            background: #333;
+        }
+
+        .close {
+            float: right;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 0.75em;
+            color: #555;
+            font-weight: 300;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Веб-Олег</h1>
+    </header>
+
+    <section id="description">
+        <h2>О нас</h2>
+        <p>Разработка сайтов, лендингов, Telegram-ботов и интеграция ИИ.</p>
+    </section>
+
+    <section id="services">
+        <h2>Услуги</h2>
+        <div class="services">
+            <div class="service-item">
+                <h3>Сайты</h3>
+            </div>
+            <div class="service-item">
+                <h3>Лендинги</h3>
+            </div>
+            <div class="service-item">
+                <h3>Боты</h3>
+            </div>
+            <div class="service-item">
+                <h3>ИИ</h3>
+            </div>
+        </div>
+    </section>
+
+    <section id="stages">
+        <h2>Этапы</h2>
+        <ul class="stages">
+            <li>Анализ</li>
+            <li>Дизайн</li>
+            <li>Разработка</li>
+            <li>Тестирование</li>
+            <li>Поддержка</li>
+        </ul>
+    </section>
+
+    <section class="brief">
+        <button onclick="openModal()">Бриф</button>
+    </section>
+
+    <div id="briefModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Бриф</h2>
+            <form id="briefForm">
+                <label>Имя</label>
+                <input type="text" placeholder="Ваше имя" required>
+                <label>Email</label>
+                <input type="email" placeholder="web-oleg@gmail.com" required>
+                <label>Проект</label>
+                <textarea rows="3" placeholder="Опишите проект" required></textarea>
+                <button type="submit">Отправить</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        ИП Захарин Олег Сергеевич
+    </footer>
+
+    <script>
+        function openModal() {
+            document.getElementById('briefModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('briefModal').style.display = 'none';
+        }
+
+        document.getElementById('briefForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Бриф отправлен!');
+            closeModal();
+            this.reset();
+        });
+    </script>
+</body>
+</html>

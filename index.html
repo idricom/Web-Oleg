@@ -1,43 +1,5 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+```html
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -52,112 +14,138 @@
         }
 
         body {
-            background: #fff;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             color: #000;
             line-height: 1.5;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
+            overflow-x: hidden;
         }
 
         header {
             text-align: center;
-            padding: 20px;
+            padding: 40px 20px;
             width: 100%;
         }
 
         h1 {
-            font-size: 2em;
+            font-size: 2.5em;
             font-weight: 700;
+            letter-spacing: -0.02em;
+            overflow: hidden; /* Для typewriter эффекта */
+            white-space: nowrap; /* Чтобы текст не переносился */
+            border-right: 0.15em solid #000; /* Курсор */
+            animation: blink-caret 0.75s step-end infinite; /* Мигание курсора */
+        }
+
+        .typewriter {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 0.15em solid #000;
+            animation: blink-caret 0.75s step-end infinite;
         }
 
         section {
-            max-width: 600px;
+            max-width: 800px;
             margin: 20px;
-            padding: 15px;
+            padding: 20px;
             text-align: center;
-            border-bottom: 1px solid #eee;
-        }
-
-        section:last-of-type {
-            border-bottom: none;
         }
 
         h2 {
-            font-size: 1.3em;
+            font-size: 1.5em;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            letter-spacing: -0.01em;
         }
 
         p {
-            font-size: 0.9em;
+            font-size: 1em;
             font-weight: 300;
             color: #333;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .services {
             display: flex;
-            gap: 10px;
+            gap: 15px;
             justify-content: center;
-            padding: 10px 0;
+            padding: 15px 0;
         }
 
         .service-item {
-            padding: 10px;
-            border-radius: 8px;
+            padding: 15px;
+            border-radius: 12px;
             flex: 1;
-            min-width: 100px;
-            transition: transform 0.3s ease;
+            min-width: 120px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .service-item:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
         }
 
         .service-item h3 {
-            font-size: 1em;
+            font-size: 1.1em;
             font-weight: 500;
         }
 
         .stages {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 15px;
             justify-content: center;
             padding: 0;
             list-style: none;
         }
 
         .stages li {
-            font-size: 0.9em;
+            font-size: 1em;
             font-weight: 300;
-            padding: 8px 12px;
-            border-radius: 8px;
-            background: rgba(0, 0, 0, 0.02);
+            padding: 12px 16px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             flex: 1;
-            min-width: 100px;
+            min-width: 120px;
             text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stages li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
         }
 
         .brief {
-            margin: 20px 0;
+            margin: 30px 0;
         }
 
         .brief button {
-            font-size: 0.9em;
+            font-size: 1em;
             font-weight: 500;
             color: #fff;
             background: #000;
-            padding: 8px 16px;
+            padding: 12px 24px;
             border: none;
-            border-radius: 8px;
+            border-radius: 50px;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: background 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .brief button:hover {
-            background: #333;
+            background: #1a1a1a;
+            transform: scale(1.05);
         }
 
         .modal {
@@ -170,75 +158,100 @@
             background: rgba(0, 0, 0, 0.5);
             justify-content: center;
             align-items: center;
+            backdrop-filter: blur(5px);
         }
 
         .modal-content {
-            background: #fff;
-            padding: 15px;
-            border-radius: 10px;
-            max-width: 400px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 20px;
+            border-radius: 16px;
+            max-width: 450px;
             width: 90%;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
         .modal-content h2 {
-            font-size: 1.2em;
-            margin-bottom: 10px;
+            font-size: 1.3em;
+            margin-bottom: 15px;
         }
 
         .modal-content label {
-            font-size: 0.85em;
+            font-size: 0.9em;
             font-weight: 300;
             display: block;
-            margin: 8px 0 4px;
+            margin: 10px 0 5px;
         }
 
         .modal-content input,
         .modal-content textarea {
             width: 100%;
-            padding: 6px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 0.85em;
+            padding: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            font-size: 0.9em;
+            background: rgba(255, 255, 255, 0.5);
+            transition: border 0.3s ease;
+        }
+
+        .modal-content input:focus,
+        .modal-content textarea:focus {
+            border: 1px solid #000;
         }
 
         .modal-content button {
-            margin-top: 10px;
-            padding: 8px;
+            margin-top: 15px;
+            padding: 10px;
             background: #000;
             color: #fff;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
+            width: 100%;
+            transition: background 0.3s ease;
         }
 
         .modal-content button:hover {
-            background: #333;
+            background: #1a1a1a;
         }
 
         .close {
             float: right;
-            font-size: 1em;
+            font-size: 1.2em;
             cursor: pointer;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #000;
         }
 
         footer {
             text-align: center;
-            padding: 15px;
-            font-size: 0.75em;
+            padding: 20px;
+            font-size: 0.8em;
             color: #555;
             font-weight: 300;
             width: 100%;
+            margin-top: auto;
+        }
+
+        /* Анимация для курсора */
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #000; }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Веб-Олег</h1>
+        <h1 class="typewriter"></h1>
     </header>
 
     <section id="description">
-        <h2>О нас</h2>
-        <p>Разработка сайтов, лендингов, Telegram-ботов и интеграция ИИ.</p>
+        <h2 class="typewriter"></h2>
+        <p class="typewriter"></p>
     </section>
 
     <section id="services">
@@ -295,6 +308,34 @@
     </footer>
 
     <script>
+        // Typewriter эффект
+        function typeWriter(element, text, speed = 50) {
+            let i = 0;
+            element.style.width = '0'; // Начинаем с нулевой ширины
+            const interval = setInterval(() => {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    element.style.width = `${element.innerHTML.length}ch`; // Расширяем ширину
+                } else {
+                    clearInterval(interval);
+                    element.style.borderRight = 'none'; // Убираем курсор после завершения
+                }
+            }, speed);
+        }
+
+        // Применяем эффект к элементам
+        document.addEventListener('DOMContentLoaded', () => {
+            const h1 = document.querySelector('h1');
+            typeWriter(h1, 'Веб-Олег', 100);
+
+            const aboutH2 = document.querySelector('#description h2');
+            typeWriter(aboutH2, 'О нас', 100);
+
+            const aboutP = document.querySelector('#description p');
+            typeWriter(aboutP, 'Разработка сайтов, лендингов, Telegram-ботов и интеграция ИИ.', 50);
+        });
+
         function openModal() {
             document.getElementById('briefModal').style.display = 'flex';
         }
@@ -312,3 +353,4 @@
     </script>
 </body>
 </html>
+```

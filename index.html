@@ -14,10 +14,10 @@
         }
 
         body {
-            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            background: linear-gradient(135deg, #f5f5f5, #fafafa);
             background-size: 200% 200%;
-            animation: gradient 15s ease infinite;
-            color: #fff;
+            animation: subtleGradient 20s ease infinite;
+            color: #1f1f1f;
             line-height: 1.6;
             min-height: 100vh;
             display: flex;
@@ -26,7 +26,7 @@
             overflow-x: hidden;
         }
 
-        @keyframes gradient {
+        @keyframes subtleGradient {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
@@ -34,20 +34,17 @@
 
         header {
             text-align: center;
-            padding: 60px 20px;
+            padding: 80px 20px;
             width: 100%;
         }
 
         h1 {
-            font-size: 3em;
+            font-size: 2.8em;
             font-weight: 700;
             letter-spacing: -0.02em;
             white-space: nowrap;
             overflow: hidden;
-            border-right: 0.15em solid #fff;
-            animation: blink-caret 0.75s step-end infinite;
-            opacity: 0;
-            animation: fadeIn 1s ease forwards 0.5s;
+            animation: fadeIn 1s ease forwards;
         }
 
         @keyframes fadeIn {
@@ -57,84 +54,76 @@
 
         section {
             max-width: 900px;
-            margin: 30px 20px;
+            margin: 20px;
             padding: 30px;
             text-align: center;
             opacity: 0;
             transform: translateY(20px);
-            animation: fadeIn 1s ease forwards;
-            animation-delay: calc(0.2s * var(--section-index));
+            animation: fadeIn 0.8s ease forwards;
+            animation-delay: calc(0.15s * var(--section-index));
         }
 
         h2 {
-            font-size: 1.8em;
+            font-size: 1.6em;
             font-weight: 600;
             margin-bottom: 20px;
             letter-spacing: -0.01em;
-            white-space: nowrap;
-            overflow: hidden;
-            border-right: 0.15em solid #fff;
-            animation: blink-caret 0.75s step-end infinite;
         }
 
         p {
-            font-size: 1.1em;
+            font-size: 1em;
             font-weight: 300;
-            color: #e5e7eb;
-            max-width: 700px;
+            color: #4b4b4b;
+            max-width: 600px;
             margin: 0 auto;
         }
 
         .services {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
             padding: 20px 0;
         }
 
         .service-item {
             padding: 20px;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .service-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
         .service-item h3 {
-            font-size: 1.2em;
+            font-size: 1.1em;
             font-weight: 500;
         }
 
         .stages {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
+            gap: 12px;
             padding: 0;
             list-style: none;
         }
 
         .stages li {
-            font-size: 1em;
-            font-weight: 300;
+            font-size: 0.95em;
+            font-weight: 400;
             padding: 15px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.05);
             text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease;
         }
 
         .stages li:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transform: translateY(-3px);
         }
 
         .brief {
@@ -142,22 +131,20 @@
         }
 
         .brief button {
-            font-size: 1.1em;
+            font-size: 1em;
             font-weight: 500;
             color: #fff;
-            background: #000;
-            padding: 14px 28px;
+            background: #1f1f1f;
+            padding: 12px 30px;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s ease, transform 0.3s ease;
         }
 
         .brief button:hover {
-            background: #1f2937;
-            transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            background: #2d2d2d;
+            transform: scale(1.03);
         }
 
         .modal {
@@ -167,118 +154,107 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.4);
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(8px);
         }
 
         .modal-content {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
+            background: #fff;
             padding: 30px;
-            border-radius: 16px;
-            max-width: 500px;
+            border-radius: 12px;
+            max-width: 480px;
             width: 90%;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
             position: relative;
-            animation: slideIn 0.5s ease;
+            animation: slideIn 0.4s ease;
         }
 
         @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-20px); }
+            from { opacity: 0; transform: translateY(-15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .modal-content h2 {
-            font-size: 1.5em;
-            color: #111827;
+            font-size: 1.4em;
+            color: #1f1f1f;
             margin-bottom: 20px;
-            border-right: none;
-            animation: none;
         }
 
         .modal-content label {
             font-size: 0.9em;
             font-weight: 400;
             display: block;
-            margin: 15px 0 5px;
-            color: #374151;
+            margin: 12px 0 6px;
+            color: #4b4b4b;
         }
 
         .modal-content input,
         .modal-content textarea {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             font-size: 0.9em;
-            background: rgba(255, 255, 255, 0.7);
-            transition: border 0.3s ease, box-shadow 0.3s ease;
+            background: #fafafa;
+            transition: border 0.3s ease;
         }
 
         .modal-content input:focus,
         .modal-content textarea:focus {
-            border: 1px solid #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            border: 1px solid #1f1f1f;
             outline: none;
         }
 
         .modal-content button {
             margin-top: 20px;
-            padding: 12px;
-            background: #3b82f6;
+            padding: 10px;
+            background: #1f1f1f;
             color: #fff;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             width: 100%;
-            font-size: 1em;
+            font-size: 0.95em;
             font-weight: 500;
-            transition: background 0.3s ease, transform 0.3s ease;
+            transition: background 0.3s ease;
         }
 
         .modal-content button:hover {
-            background: #2563eb;
-            transform: scale(1.02);
+            background: #2d2d2d;
         }
 
         .close {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 1.5em;
+            top: 12px;
+            right: 12px;
+            font-size: 1.4em;
             cursor: pointer;
             color: #6b7280;
             transition: color 0.3s ease;
         }
 
         .close:hover {
-            color: #111827;
+            color: #1f1f1f;
         }
 
         footer {
             text-align: center;
             padding: 30px;
-            font-size: 0.9em;
+            font-size: 0.85em;
             font-weight: 300;
-            color: #d1d5db;
+            color: #6b7280;
             width: 100%;
             margin-top: auto;
             opacity: 0;
-            animation: fadeIn 1s ease forwards 1s;
-        }
-
-        @keyframes blink-caret {
-            from, to { border-color: transparent; }
-            50% { border-color: #fff; }
+            animation: fadeIn 1s ease forwards 0.8s;
         }
 
         @media (max-width: 768px) {
-            h1 { font-size: 2.2em; }
-            h2 { font-size: 1.5em; }
-            p { font-size: 1em; }
+            h1 { font-size: 2em; }
+            h2 { font-size: 1.4em; }
+            p { font-size: 0.95em; }
             .services, .stages { grid-template-columns: 1fr; }
+            header { padding: 40px 20px; }
             .modal-content { padding: 20px; }
         }
     </style>
@@ -290,7 +266,7 @@
 
     <section id="description" style="--section-index: 1;">
         <h2 class="typewriter">О нас</h2>
-        <p class="typewriter">Создаем современные сайты, лендинги, Telegram-боты и решения с ИИ.</p>
+        <p class="typewriter">Создаём сайты, лендинги, боты и решения с ИИ, которые вдохновляют.</p>
     </section>
 
     <section id="services" style="--section-index: 2;">
@@ -341,15 +317,13 @@
     <script>
         function typeWriter(element, text, speed = 50, callback) {
             let i = 0;
-            element.style.width = '0';
+            element.innerHTML = '';
             const interval = setInterval(() => {
                 if (i < text.length) {
                     element.innerHTML += text.charAt(i);
                     i++;
-                    element.style.width = `${element.innerHTML.length}ch`;
                 } else {
                     clearInterval(interval);
-                    element.style.borderRight = 'none';
                     if (callback) callback();
                 }
             }, speed);
@@ -360,9 +334,9 @@
             const aboutH2 = document.querySelector('#description h2');
             const aboutP = document.querySelector('#description p');
 
-            typeWriter(h1, 'Веб-Олег', 100, () => {
-                typeWriter(aboutH2, 'О нас', 100, () => {
-                    typeWriter(aboutP, 'Создаем современные сайты, лендинги, Telegram-боты и решения с ИИ.', 50);
+            typeWriter(h1, 'Веб-Олег', 80, () => {
+                typeWriter(aboutH2, 'О нас', 80, () => {
+                    typeWriter(aboutP, 'Создаём сайты, лендинги, боты и решения с ИИ, которые вдохновляют.', 40);
                 });
             });
         });

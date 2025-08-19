@@ -34,42 +34,16 @@
 
         header {
             text-align: center;
-            padding: 80px 20px;
+            padding: 60px 20px;
             width: 100%;
         }
 
         h1 {
-            font-size: 2.8em;
+            font-size: 3em;
             font-weight: 700;
             letter-spacing: -0.02em;
+            display: inline-block;
             white-space: nowrap;
-            overflow: hidden;
-            animation: fadeIn 1s ease forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        section {
-            max-width: 900px;
-            margin: 20px;
-            padding: 30px;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeIn 0.8s ease forwards;
-            animation-delay: calc(0.15s * var(--section-index));
-        }
-
-        h2 {
-            font-size: 1.6em;
-            font-weight: 600;
-            margin-bottom: 20px;
-            letter-spacing: -0.01em;
-            white-space: nowrap;
-            overflow: hidden;
             border-right: 0.15em solid #1f1f1f;
             animation: blink-caret 0.75s step-end infinite;
         }
@@ -79,64 +53,90 @@
             50% { border-color: #1f1f1f; }
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        section {
+            max-width: 1000px;
+            margin: 40px 20px;
+            padding: 40px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s ease forwards;
+            animation-delay: calc(0.2s * var(--section-index));
+        }
+
+        h2 {
+            font-size: 2em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: -0.01em;
+            display: inline-block;
+            white-space: nowrap;
+            border-right: 0.15em solid #1f1f1f;
+            animation: blink-caret 0.75s step-end infinite;
+        }
+
         p {
-            font-size: 1em;
+            font-size: 1.1em;
             font-weight: 300;
             color: #4b4b4b;
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto;
         }
 
         .services {
-            display: flex;
-            flex-wrap: nowrap;
-            gap: 15px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
             padding: 20px 0;
             justify-content: center;
         }
 
         .service-item {
-            padding: 20px;
+            padding: 25px;
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.9);
             border: 1px solid rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            min-width: 120px;
-            overflow: hidden;
-            white-space: nowrap;
+            text-align: center;
         }
 
         .service-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
         }
 
         .service-item h3 {
-            font-size: 1.1em;
+            font-size: 1.3em;
             font-weight: 500;
             display: inline-block;
+            white-space: nowrap;
         }
 
         .stages {
             display: flex;
             flex-wrap: nowrap;
-            gap: 12px;
-            padding: 0;
+            gap: 15px;
+            padding: 20px 0;
             list-style: none;
             justify-content: center;
+            overflow-x: auto;
         }
 
         .stages li {
-            font-size: 0.95em;
+            font-size: 1em;
             font-weight: 400;
-            padding: 15px;
+            padding: 15px 25px;
             border-radius: 10px;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.9);
             border: 1px solid rgba(0, 0, 0, 0.05);
             text-align: center;
             transition: transform 0.3s ease;
-            min-width: 100px;
-            overflow: hidden;
+            min-width: 140px;
             white-space: nowrap;
         }
 
@@ -145,15 +145,15 @@
         }
 
         .brief {
-            margin: 40px 0;
+            margin: 60px 0;
         }
 
         .brief button {
-            font-size: 1em;
+            font-size: 1.1em;
             font-weight: 500;
             color: #fff;
             background: #1f1f1f;
-            padding: 12px 30px;
+            padding: 15px 40px;
             border: none;
             border-radius: 50px;
             cursor: pointer;
@@ -162,7 +162,7 @@
 
         .brief button:hover {
             background: #2d2d2d;
-            transform: scale(1.03);
+            transform: scale(1.05);
         }
 
         .modal {
@@ -172,49 +172,50 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.5);
             justify-content: center;
             align-items: center;
+            z-index: 1000;
         }
 
         .modal-content {
             background: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            max-width: 480px;
+            padding: 40px;
+            border-radius: 16px;
+            max-width: 500px;
             width: 90%;
             position: relative;
             animation: slideIn 0.4s ease;
         }
 
         @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-15px); }
+            from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .modal-content h2 {
-            font-size: 1.4em;
+            font-size: 1.8em;
             color: #1f1f1f;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             border-right: none;
             animation: none;
         }
 
         .modal-content label {
-            font-size: 0.9em;
+            font-size: 1em;
             font-weight: 400;
             display: block;
-            margin: 12px 0 6px;
+            margin: 15px 0 8px;
             color: #4b4b4b;
         }
 
         .modal-content input,
         .modal-content textarea {
             width: 100%;
-            padding: 10px;
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
             border-radius: 8px;
-            font-size: 0.9em;
+            font-size: 1em;
             background: #fafafa;
             transition: border 0.3s ease;
         }
@@ -226,15 +227,15 @@
         }
 
         .modal-content button {
-            margin-top: 20px;
-            padding: 10px;
+            margin-top: 25px;
+            padding: 12px;
             background: #1f1f1f;
             color: #fff;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             width: 100%;
-            font-size: 0.95em;
+            font-size: 1em;
             font-weight: 500;
             transition: background 0.3s ease;
         }
@@ -245,9 +246,9 @@
 
         .close {
             position: absolute;
-            top: 12px;
-            right: 12px;
-            font-size: 1.4em;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5em;
             cursor: pointer;
             color: #6b7280;
             transition: color 0.3s ease;
@@ -259,8 +260,8 @@
 
         footer {
             text-align: center;
-            padding: 30px;
-            font-size: 0.85em;
+            padding: 40px 20px;
+            font-size: 0.9em;
             font-weight: 300;
             color: #6b7280;
             width: 100%;
@@ -270,19 +271,23 @@
         }
 
         @media (max-width: 768px) {
-            h1 { font-size: 2em; }
-            h2 { font-size: 1.4em; }
-            p { font-size: 0.95em; }
-            .services, .stages { 
-                flex-direction: column; 
-                align-items: center; 
+            h1 { font-size: 2.5em; }
+            h2 { font-size: 1.8em; }
+            p { font-size: 1em; }
+            .services { 
+                grid-template-columns: 1fr; 
+            }
+            .stages { 
+                flex-direction: row; 
+                justify-content: flex-start;
+                padding: 20px;
             }
             .service-item, .stages li { 
                 width: 100%; 
-                max-width: 200px; 
+                max-width: 300px; 
             }
             header { padding: 40px 20px; }
-            .modal-content { padding: 20px; }
+            .modal-content { padding: 25px; }
         }
     </style>
 </head>
@@ -293,21 +298,21 @@
 
     <section id="description" style="--section-index: 1;">
         <h2 class="typewriter">О нас</h2>
-        <p class="typewriter">Создаём сайты, лендинги, боты и решения с ИИ, которые вдохновляют.</p>
+        <p>Мы создаём современные сайты, лендинги, боты и решения с ИИ, которые решают ваши задачи просто и эффективно.</p>
     </section>
 
     <section id="services" style="--section-index: 2;">
         <h2 class="typewriter">Услуги</h2>
         <div class="services">
-            <div class="service-item"><h3 class="typewriter">Сайты</h3></div>
-            <div class="service-item"><h3 class="typewriter">Лендинги</h3></div>
-            <div class="service-item"><h3 class="typewriter">Боты</h3></div>
-            <div class="service-item"><h3 class="typewriter">ИИ</h3></div>
+            <div class="service-item"><h3 class="typewriter">Веб-сайты</h3><p>Функциональные и стильные сайты для бизнеса.</p></div>
+            <div class="service-item"><h3 class="typewriter">Лендинги</h3><p>Целевые страницы с высоким конверсионным потенциалом.</p></div>
+            <div class="service-item"><h3 class="typewriter">Чат-боты</h3><p>Автоматизация общения с клиентами.</p></div>
+            <div class="service-item"><h3 class="typewriter">ИИ-решения</h3><p>Инновационные технологии для вашего проекта.</p></div>
         </div>
     </section>
 
     <section id="stages" style="--section-index: 3;">
-        <h2 class="typewriter">Этапы</h2>
+        <h2 class="typewriter">Как мы работаем</h2>
         <ul class="stages">
             <li class="typewriter">Анализ</li>
             <li class="typewriter">Дизайн</li>
@@ -326,13 +331,13 @@
             <span class="close" onclick="closeModal()">&times;</span>
             <h2>Бриф</h2>
             <form id="briefForm">
-                <label>Имя</label>
-                <input type="text" placeholder="Ваше имя" required>
-                <label>Email</label>
+                <label>Ваше имя</label>
+                <input type="text" placeholder="Введите ваше имя" required>
+                <label>Электронная почта</label>
                 <input type="email" placeholder="example@gmail.com" required>
-                <label>О проекте</label>
-                <textarea rows="4" placeholder="Расскажите о вашем проекте" required></textarea>
-                <button type="submit">Отправить</button>
+                <label>О вашем проекте</label>
+                <textarea rows="5" placeholder="Расскажите, что вы хотите создать" required></textarea>
+                <button type="submit">Отправить бриф</button>
             </form>
         </div>
     </div>
@@ -360,42 +365,41 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const h1 = document.querySelector('h1');
-            const aboutH2 = document.querySelector('#description h2');
+            const h1 = document.querySelector('h1.typewriter');
+            const aboutH2 = document.querySelector('#description h2.typewriter');
             const aboutP = document.querySelector('#description p');
-            const servicesH2 = document.querySelector('#services h2');
-            const servicesItems = document.querySelectorAll('#services .service-item h3');
-            const stagesH2 = document.querySelector('#stages h2');
-            const stagesItems = document.querySelectorAll('#stages li');
+            const servicesH2 = document.querySelector('#services h2.typewriter');
+            const servicesItems = document.querySelectorAll('#services .service-item h3.typewriter');
+            const stagesH2 = document.querySelector('#stages h2.typewriter');
+            const stagesItems = document.querySelectorAll('#stages li.typewriter');
 
             typeWriter(h1, 'Веб-Олег', 80, () => {
                 typeWriter(aboutH2, 'О нас', 80, () => {
-                    typeWriter(aboutP, 'Создаём сайты, лендинги, боты и решения с ИИ, которые вдохновляют.', 40, () => {
-                        typeWriter(servicesH2, 'Услуги', 80, () => {
-                            let index = 0;
-                            function typeNextService() {
-                                if (index < servicesItems.length) {
-                                    typeWriter(servicesItems[index], servicesItems[index].textContent, 80, () => {
-                                        index++;
-                                        typeNextService();
-                                    });
-                                } else {
-                                    typeWriter(stagesH2, 'Этапы', 80, () => {
-                                        let stageIndex = 0;
-                                        function typeNextStage() {
-                                            if (stageIndex < stagesItems.length) {
-                                                typeWriter(stagesItems[stageIndex], stagesItems[stageIndex].textContent, 80, () => {
-                                                    stageIndex++;
-                                                    typeNextStage();
-                                                });
-                                            }
+                    aboutP.style.opacity = '1';
+                    typeWriter(servicesH2, 'Услуги', 80, () => {
+                        let index = 0;
+                        function typeNextService() {
+                            if (index < servicesItems.length) {
+                                typeWriter(servicesItems[index], servicesItems[index].textContent, 80, () => {
+                                    index++;
+                                    typeNextService();
+                                });
+                            } else {
+                                typeWriter(stagesH2, 'Как мы работаем', 80, () => {
+                                    let stageIndex = 0;
+                                    function typeNextStage() {
+                                        if (stageIndex < stagesItems.length) {
+                                            typeWriter(stagesItems[stageIndex], stagesItems[stageIndex].textContent, 80, () => {
+                                                stageIndex++;
+                                                typeNextStage();
+                                            });
                                         }
-                                        typeNextStage();
-                                    });
-                                }
+                                    }
+                                    typeNextStage();
+                                });
                             }
-                            typeNextService();
-                        });
+                        }
+                        typeNextService();
                     });
                 });
             });
@@ -411,7 +415,7 @@
 
         document.getElementById('briefForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('Бриф отправлен!');
+            alert('Бриф успешно отправлен!');
             closeModal();
             this.reset();
         });

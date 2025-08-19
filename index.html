@@ -332,11 +332,11 @@
             <h2>Бриф</h2>
             <form id="briefForm">
                 <label>Ваше имя</label>
-                <input type="text" placeholder="Введите ваше имя" required>
+                <input type="text" name="name" placeholder="Введите ваше имя" required>
                 <label>Электронная почта</label>
-                <input type="email" placeholder="example@gmail.com" required>
+                <input type="email" name="email" placeholder="example@gmail.com" required>
                 <label>О вашем проекте</label>
-                <textarea rows="5" placeholder="Расскажите, что вы хотите создать" required></textarea>
+                <textarea rows="5" name="project" placeholder="Расскажите, что вы хотите создать" required></textarea>
                 <button type="submit">Отправить бриф</button>
             </form>
         </div>
@@ -415,9 +415,17 @@
 
         document.getElementById('briefForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('Бриф успешно отправлен!');
+            const form = e.target;
+            const name = form.querySelector('input[name="name"]').value;
+            const email = form.querySelector('input[name="email"]').value;
+            const project = form.querySelector('textarea[name="project"]').value;
+            const subject = encodeURIComponent('Новый бриф от ' + name);
+            const body = encodeURIComponent(`Имя: ${name}\nEmail: ${email}\nО проекте: ${project}`);
+            const mailtoLink = `mailto:web-studio-oleg@yandex.ru?subject=${subject}&body=${body}`;
+            window.location.href = mailtoLink;
+            alert('Бриф готов к отправке через ваш почтовый клиент!');
             closeModal();
-            this.reset();
+            form.reset();
         });
     </script>
 </body>
